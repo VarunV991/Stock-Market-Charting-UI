@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
+import { environmentURL } from "src/environments/environment";
 import { StockExchangeDto } from "../models/StockExchangeDto";
 
 @Injectable({providedIn: 'root'})
@@ -10,7 +11,7 @@ export class StockExchangeService{
     url:string;
 
     constructor(private http: HttpClient, private router: Router) {
-        this.url = 'http://localhost:8080/stock-exchange';
+        this.url = environmentURL+'/stock-exchange';
     }
 
     public getStockExchanges():Observable<any>{
