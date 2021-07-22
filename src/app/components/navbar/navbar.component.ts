@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   isAuthenticated: boolean = true;
-  isAdmin: boolean = false;
+  isAdmin: boolean = true;
 
   constructor() { }
 
