@@ -1,0 +1,68 @@
+<div class="card">
+    <div class="card-header">
+      Comparison Charts
+    </div>
+  
+    <div class="card-body">
+      <form #compareForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="companyList">Company Name</label>
+              <ng-multiselect-dropdown
+                  [placeholder]="'Company'"
+                  [settings]="multiDropdownSettings"
+                  [data]="companies"
+                  [(ngModel)]="selectedCompanies"
+                  name="companyList">
+              </ng-multiselect-dropdown>
+          </div>
+  
+          <div class="form-group col-md-6">
+              <label for="exchangeList">Stock Exchange Name</label>
+                <ng-multiselect-dropdown
+                    [placeholder]="'Stock Exchange Name'"
+                    [settings]="singleDropdownSettings"
+                    [data]="exchanges"
+                    [(ngModel)]="selectedExchange"
+                    name="exchangeList">
+                </ng-multiselect-dropdown>
+            </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="fromPeriod">From Period (YYYY-MM-dd)</label>
+            <input type="text" class="form-control" name="fromPeriod"
+              [(ngModel)]="fromPeriod" required>
+          </div>
+    
+          <div class="form-group col-md-6">
+            <label for="toPeriod">To Period (YYYY-MM-dd)</label>
+            <input type="text" class="form-control" name="toPeriod"
+              [(ngModel)]="toPeriod" required>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="periodicity">Periodicity</label>
+          <ng-multiselect-dropdown
+                  [placeholder]="'Periodicity'"
+                  [settings]="singleDropdownSettings"
+                  [data]="periodicityList"
+                  [(ngModel)]="selectedPeriod"
+                  name="periodicity">
+              </ng-multiselect-dropdown>
+        </div>
+        <input type="submit" (click)="onSubmit()" 
+        value="Generate Chart" class="btn btn-primary btn-block">
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf=flagForChart>
+    <fusioncharts
+      [type]="type"
+      [width]="width"
+      [height]="height"
+      [dataSource]="dataSource">
+    </fusioncharts>
+  </div>

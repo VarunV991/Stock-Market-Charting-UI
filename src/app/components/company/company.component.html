@@ -1,0 +1,105 @@
+<div class="d-flex mt-1">
+  <div class="mr-auto">
+    <h4>Manage Companies</h4>
+  </div>
+  <div class="d-flex flex-row-reverse">
+    <a routerLink="/create-company" class="btn btn-dark">Add new Company</a>
+  </div>
+</div>  
+
+<div class="mt-4">
+  <div *ngIf="flagForData;else noCompanies">
+    <ag-grid-angular
+    style="width: 100%;height: 70vh;"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="colDefs"
+    [defaultColDef]="defaultColDef"
+    [rowSelection]="rowSelection"
+    [getContextMenuItems]="getContextMenuItems"
+    [gridOptions]="gridOptions">
+    </ag-grid-angular>
+  </div>
+  
+  <ng-template #noCompanies>
+    <h5>There are no companies in the system.</h5>
+  </ng-template>
+</div>
+
+<div class="modal" role="dialog" tabindex="-1" [ngStyle]="{'display':exchangeCodeMappingDisplay}"
+style="background-color: rgba(0, 0, 0, 0.05);">
+    <div class="modal-dialog modal-lg" style="border: 1px solid #adadad;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Exchange Code Mappings for {{companyName}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <div class="col-md-8 form-group">
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" class="form-control" (change)="onUpload($event)"
+                      placeholder="Upload file" id="excel">
+                    <label class="custom-file-label" for="excel">{{inputFileName}}</label>
+                  </div>
+                  <div class="ml-4">
+                    <button (click)=" uploadExchangeMappings()"
+                    class="btn btn-primary">Upload</button>
+                  </div>
+                </div><br>
+                <div>
+                </div>
+                <br>
+                <a href="../../../assets/sample_exchange_code_mapping.xlsx">Click here to download sample excel file.</a>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" role="dialog" tabindex="-1" [ngStyle]="{'display':ipoDetailDisplay}"
+style="background-color: rgba(0, 0, 0, 0.05);">
+  <div class="modal-dialog modal-lg" style="border: 1px solid #adadad;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ipo Details for {{companyName}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table *ngIf="ipos?.length>0; else noIpos" class="table table-striped">
+          <thead class="thead-inverse thead-dark">
+            <tr>
+              <th>Company Name</th>
+              <th>Stock Exchange</th>
+              <th>Price per Share</th>
+              <th>Number of Shares</th>
+              <th>Open Date Time</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ipo of ipos">
+              <td>{{ ipo.companyName }}</td>
+              <td>{{ ipo.exchangeName }}</td>
+              <td>{{ ipo.pricePerShare }}</td>
+              <td>{{ ipo.totalShares }}</td>
+              <td>{{ ipo.openDateTime }}</td>
+              <td>{{ ipo.remarks }}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <ng-template #noIpos>
+          <hr>
+          <h5>There is no IPO for the company.</h5>
+        </ng-template>        
+      </div>
+    </div>
+  </div>
+</div>

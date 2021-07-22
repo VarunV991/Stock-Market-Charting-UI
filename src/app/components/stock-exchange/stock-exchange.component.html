@@ -1,0 +1,72 @@
+<div class="d-flex mt-1">
+  <div class="mr-auto">
+    <h4>Manage Exchanges</h4>
+  </div>
+  <div class="d-flex flex-row-reverse">
+    <a routerLink="/create-stock-exchange" class="btn btn-dark">Add new Exchnage</a>
+  </div>
+</div>  
+
+<div class="mt-4">
+  <div *ngIf="flagForData;else noExchanges">
+    <ag-grid-angular
+    style="width: 100%;height: 70vh;"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="colDefs"
+    [defaultColDef]="defaultColDef"
+    [rowSelection]="rowSelection"
+    [getContextMenuItems]="getContextMenuItems"
+    [gridOptions]="gridOptions">
+    </ag-grid-angular>
+  </div>
+  
+  <ng-template #noExchanges>
+    <h5>There are no exchanges in the system.</h5>
+  </ng-template>
+</div>
+
+<div class="modal" role="dialog" tabindex="-1" [ngStyle]="{'display':companyListDisplay}"
+style="background-color: rgba(0, 0, 0, 0.05);">
+    <div class="modal-dialog modal-lg" style="border: 1px solid #adadad;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Companies in the Exchange</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <table *ngIf="companies?.length>0; else noCompanies" class="table table-striped">
+                <thead class="thead-inverse thead-dark">
+                  <tr>
+                    <th>Company Name</th>
+                    <th>Company Code</th>
+                    <th>Turnover</th>
+                    <th>Ceo</th>
+                    <th>Board of Directors</th>
+                    <th>Description</th>
+                    <th>Sector</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let company of companies">
+                    <td>{{ company.name }}</td>
+                    <td>{{ company.exchangeCode }}</td>
+                    <td>{{ company.turnover }}</td>
+                    <td>{{ company.ceo }}</td>
+                    <td>{{ company.boardOfDirectors }}</td>
+                    <td>{{ company.description }}</td>
+                    <td>{{ company.sectorName }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <ng-template #noCompanies>
+                <h5>There are no companies in the exchange.</h5>
+              </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
