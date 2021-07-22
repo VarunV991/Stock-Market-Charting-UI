@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { StockPriceDto } from "../models/StockPriceDto";
-import { environmentURL } from "src/environments/environment";
 
 @Injectable({providedIn: 'root'})
 export class StockPriceService{
@@ -11,7 +10,7 @@ export class StockPriceService{
     url:string;
 
     constructor(private http: HttpClient, private router: Router) {
-        this.url = environmentURL+'/stock-price';
+        this.url = 'https://smc-service.herokuapp.com/stock-price';
     }
 
     public addStockPriceList(stockPrices:StockPriceDto[]):Observable<any>{
