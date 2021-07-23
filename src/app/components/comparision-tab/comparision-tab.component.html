@@ -1,0 +1,28 @@
+<div class="tab-wrappers">
+    <ul class="nav nav-tabs nav-tabs-bottom mb-4" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href='#compareCompaniesTab' role="tab" aria-controls="active"
+        aria-expanded="true"><span class="font-lg font-bold mb-3">Compare Companies</span></a>
+        </li>
+        <li class="nav-item w25">
+            <a class="nav-link" data-toggle="tab" href='#compareSectorTab' role="tab" aria-controls="inactive"
+        aria-expanded="true" ng-reflect-klass="nav-link"><span class="font-lg font-bold mb-3">Compare Sector</span></a>
+        </li>
+        <li class="nav-item w25">
+            <a class="nav-link" data-toggle="tab" href='#compareCompanySectorTab' role="tab" aria-controls="inactive"
+        aria-expanded="true" ng-reflect-klass="nav-link"><span class="font-lg font-bold mb-3">Compare Company & Sector</span></a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade show active" id="compareCompaniesTab">
+            <app-comparision></app-comparision>
+        </div>
+        <div role="tabpanel" class="tab-pane fade show" id="compareSectorTab">
+            <app-comparision-sectors></app-comparision-sectors>
+        </div>
+        <div role="tabpanel" class="tab-pane fade show" id="compareCompanySectorTab">
+            <app-comparision-comp-sector></app-comparision-comp-sector>
+        </div>
+    </div>
+</div>

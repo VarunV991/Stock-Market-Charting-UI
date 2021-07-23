@@ -1,19 +1,15 @@
 <div class="card">
-    <div class="card-header">
-      Comparison Charts
-    </div>
-  
     <div class="card-body">
-      <form #compareForm="ngForm" (ngSubmit)="onSubmit()">
+      <form #compareForm="ngForm">
         <div class="row">
           <div class="form-group col-md-6">
-            <label for="companyList">Company Name</label>
+            <label for="sectorList">Sector Name</label>
               <ng-multiselect-dropdown
-                  [placeholder]="'Company'"
+                  [placeholder]="'Sector'"
                   [settings]="multiDropdownSettings"
-                  [data]="companies"
-                  [(ngModel)]="selectedCompanies"
-                  name="companyList">
+                  [data]="sectors"
+                  [(ngModel)]="selectedSectors"
+                  name="sectorList">
               </ng-multiselect-dropdown>
           </div>
   
@@ -58,11 +54,5 @@
     </div>
   </div>
 
-  <div *ngIf=flagForChart>
-    <fusioncharts
-      [type]="type"
-      [width]="width"
-      [height]="height"
-      [dataSource]="dataSource">
-    </fusioncharts>
+  <div id="canvasContainer" class="mt-5">
   </div>

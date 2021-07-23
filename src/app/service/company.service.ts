@@ -3,13 +3,14 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { CompanyDto } from "../models/CompanyDto";
+import { ServerUrl } from "../ServerUrl";
 
 @Injectable({providedIn: 'root'})
 export class CompanyService{
     url:string;
 
     constructor(private http: HttpClient, private router: Router) {
-        this.url = 'https://smc-service.herokuapp.com/company';
+        this.url = ServerUrl.url+'/company';
     }
 
     public getCompanies():Observable<any>{

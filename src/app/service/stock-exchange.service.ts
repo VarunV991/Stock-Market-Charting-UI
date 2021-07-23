@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { StockExchangeDto } from "../models/StockExchangeDto";
+import { ServerUrl } from "../ServerUrl";
 
 @Injectable({providedIn: 'root'})
 export class StockExchangeService{
@@ -10,7 +11,7 @@ export class StockExchangeService{
     url:string;
 
     constructor(private http: HttpClient, private router: Router) {
-        this.url = 'https://smc-service.herokuapp.com/stock-exchange';
+        this.url = ServerUrl.url+'/stock-exchange';
     }
 
     public getStockExchanges():Observable<any>{

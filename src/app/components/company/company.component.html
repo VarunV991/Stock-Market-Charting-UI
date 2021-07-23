@@ -38,6 +38,28 @@ style="background-color: rgba(0, 0, 0, 0.05);">
                 </button>
             </div>
             <div class="modal-body">
+              <div class="col-md-8">
+                <form>
+                  <div class="form-group">
+                    <ng-multiselect-dropdown
+                      [placeholder]="'Stock Exchange Name'"
+                      [settings]="singleDropdownSettings"
+                      [data]="exchanges"
+                      [(ngModel)]="selectedExchange"
+                      name="exchangeList">
+                  </ng-multiselect-dropdown>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="companyCode" placeholder="Company Code"
+                      [(ngModel)]="companyCode" required>
+                  </div>
+                  <div>
+                    <button class="form-control" (click)="addExchangeMapCode()"
+                    class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <hr>
               <div class="col-md-8 form-group">
                 <div class="input-group">
                   <div class="custom-file">
@@ -46,7 +68,7 @@ style="background-color: rgba(0, 0, 0, 0.05);">
                     <label class="custom-file-label" for="excel">{{inputFileName}}</label>
                   </div>
                   <div class="ml-4">
-                    <button (click)=" uploadExchangeMappings()"
+                    <button (click)="uploadExchangeMappings()"
                     class="btn btn-primary">Upload</button>
                   </div>
                 </div><br>

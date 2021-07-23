@@ -21,7 +21,9 @@ export class LoginComponent implements OnInit {
     let user = new UserDto();
     user.username = this.username;
     user.password = this.password;
-
+    this.authService.login(user).subscribe(res => {
+      
+    })
   }
 
 }

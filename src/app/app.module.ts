@@ -21,10 +21,13 @@ import { SectorComponent } from './components/sector/sector.component';
 import { CreateSectorComponent } from './components/sector/create-sector/create-sector.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { ComparisionComponent } from './components/comparision/comparision.component';
+import { ComparisionComponent } from './components/comparision-tab/comparision/comparision.component';
 import { AgGridModule } from 'ag-grid-angular';
 import 'ag-grid-enterprise'; 
-
+import {Chart} from 'chart.js';
+import { ComparisionTabComponent } from './components/comparision-tab/comparision-tab.component';
+import { ComparisionSectorsComponent } from './components/comparision-tab/comparision-sectors/comparision-sectors.component';
+import { ComparisionCompSectorComponent } from './components/comparision-tab/comparision-comp-sector/comparision-comp-sector.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import 'ag-grid-enterprise';
     CreateSectorComponent,
     LoginComponent,
     SignupComponent,
-    ComparisionComponent
+    ComparisionComponent,
+    ComparisionTabComponent,
+    ComparisionSectorsComponent,
+    ComparisionCompSectorComponent
   ],
   imports: [
     BrowserModule,

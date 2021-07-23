@@ -1,0 +1,67 @@
+<div class="card">
+    <div class="card-body">
+      <form #compareForm="ngForm">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="companyList">Company Name</label>
+              <ng-multiselect-dropdown
+                  [placeholder]="'Company'"
+                  [settings]="singleDropdownSettings"
+                  [data]="companies"
+                  [(ngModel)]="selectedCompanies"
+                  name="companyList">
+              </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="sectorList">Sector Name</label>
+              <ng-multiselect-dropdown
+                  [placeholder]="'Sector'"
+                  [settings]="singleDropdownSettings"
+                  [data]="sectors"
+                  [(ngModel)]="selectedSectors"
+                  name="sectorList">
+              </ng-multiselect-dropdown>
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="exchangeList">Stock Exchange Name</label>
+              <ng-multiselect-dropdown
+                  [placeholder]="'Stock Exchange Name'"
+                  [settings]="singleDropdownSettings"
+                  [data]="exchanges"
+                  [(ngModel)]="selectedExchange"
+                  name="exchangeList">
+              </ng-multiselect-dropdown>
+          </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="fromPeriod">From Period (YYYY-MM-dd)</label>
+            <input type="text" class="form-control" name="fromPeriod"
+              [(ngModel)]="fromPeriod" required>
+          </div>
+    
+          <div class="form-group col-md-6">
+            <label for="toPeriod">To Period (YYYY-MM-dd)</label>
+            <input type="text" class="form-control" name="toPeriod"
+              [(ngModel)]="toPeriod" required>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="periodicity">Periodicity</label>
+          <ng-multiselect-dropdown
+                  [placeholder]="'Periodicity'"
+                  [settings]="singleDropdownSettings"
+                  [data]="periodicityList"
+                  [(ngModel)]="selectedPeriod"
+                  name="periodicity">
+              </ng-multiselect-dropdown>
+        </div>
+        <input type="submit" (click)="onSubmit()" 
+        value="Generate Chart" class="btn btn-primary btn-block">
+      </form>
+    </div>
+  </div>
+
+  <div id="canvasContainer" class="mt-5">
+  </div>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CompanyComponent } from './components/company/company.component';
 import { CreateCompanyComponent } from './components/company/create-company/create-company.component';
-import { ComparisionComponent } from './components/comparision/comparision.component';
+import { ComparisionTabComponent } from './components/comparision-tab/comparision-tab.component';
 import { HomeComponent } from './components/home/home.component';
 import { ImportExcelComponent } from './components/import-excel/import-excel.component';
 import { CreateIpoComponent } from './components/ipo/create-ipo/create-ipo.component';
@@ -26,7 +26,7 @@ const routes: Routes = [
   {path: 'edit-ipo', component: CreateIpoComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
-  {path: 'compare',component:ComparisionComponent}
+  {path: 'compare',component:ComparisionTabComponent}
 ];
 
 @NgModule({

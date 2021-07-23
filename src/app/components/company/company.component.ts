@@ -7,6 +7,7 @@ import * as XLSX from 'xlsx';
 import { ToastrService } from 'ngx-toastr';
 import { IpoDto } from 'src/app/models/IpoDto';
 import { GridOptions } from 'ag-grid-community';
+import { StockExchangeService } from 'src/app/service/stock-exchange.service';
 
 @Component({
   selector: 'app-company',
@@ -23,6 +24,11 @@ export class CompanyComponent implements OnInit {
   codeMap: CompanyExchangeMappingDto;
   exchangeCodeMappingDisplay = 'none';
   companyName:string;
+  
+  companyCode;
+  exchanges:any[];
+  selectedExchange:any[] = [];
+  singleDropdownSettings
 
   ipos:IpoDto[] = []; 
   ipoDetailDisplay = 'none';
@@ -36,6 +42,7 @@ export class CompanyComponent implements OnInit {
   public timeout:any = {timeOut:10000,closeButton:true,escapeHtml:true}
 
   constructor(private companyService:CompanyService,
+    private stockExchangeService:StockExchangeService,
     private router:Router,
     private toastr:ToastrService) { }
 
@@ -57,7 +64,20 @@ export class CompanyComponent implements OnInit {
       minWidth:40,
       flex:1
     }
+    this.singleDropdownSettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'name',
+      allowSearchFilter: true
+    }
+    this.getDropdownData();
     this.viewCompanies();
+  }
+
+  getDropdownData(){
+    this.stockExchangeService.getStockExchanges().subscribe(res=>{
+      this.exchanges = [...res];
+    })
   }
 
   viewCompanies(){
@@ -68,6 +88,17 @@ export class CompanyComponent implements OnInit {
           this.flagForData = true;
         }
       });
+  }
+
+  addExchangeMapCode(){
+    if(this.selectedExchange.length>0 && this.companyCode){
+      let exchangeCode = {
+        companyCode: this.companyCode,
+        exchangeName: this.selectedExchange[0].name
+      }
+      this.codeMappings = [exchangeCode];
+      this.uploadExchangeMappings();
+    }
   }
 
   public gridOptions :GridOptions = {
@@ -105,19 +136,6 @@ export class CompanyComponent implements OnInit {
           context:params.context,
           action: () => {
             params.context.onDeleteClick(selectedRow[0].id);
-          }
-        },
-        'copyWithHeaders',
-        {
-          name: 'Excel Export (.xlsx)',
-          action: () => {
-            params.api.exportDataAsExcel();
-          }
-        },
-        {
-          name: 'CSV Export (.csv)',
-          action: () => {
-            params.api.exportDataAsCsv();
           }
         }
       ]
@@ -235,6 +253,8 @@ export class CompanyComponent implements OnInit {
   }
 
   reset(){
+    this.selectedExchange = [];
+    this.companyCode = null;
     this.codeMap = null;
     this.codeMappings = [];
     this.file = null;
