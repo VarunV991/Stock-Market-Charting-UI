@@ -11,6 +11,9 @@ import { UserDto } from '../../models/UserDto';
 export class SignupComponent implements OnInit {
 
   user:UserDto = new UserDto();
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
 
   public timeout:any = {timeOut:10000,closeButton:true,escapeHtml:true};
 
@@ -24,7 +27,21 @@ export class SignupComponent implements OnInit {
     if(!valid) {
       this.toastr.error('Fill out the User form properly!','',this.timeout);
     }
-    this.authService.createUser(value);
+    else{
+      this.user.role = "admin";
+      this.authService.register(this.user).subscribe(
+        data => {
+          this.toastr.success(data);
+          this.isSuccessful = true;
+          this.isSignUpFailed = false;
+        },
+        err => {
+          this.errorMessage = err.error.message;
+          this.toastr.error(this.errorMessage,'',this.timeout);
+          this.isSignUpFailed = true;
+        }
+    );
+    }
   }
 
 }

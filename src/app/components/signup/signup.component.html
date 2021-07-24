@@ -61,6 +61,12 @@
   
             <input type="submit" value="Submit" class="btn btn-primary btn-block">
           </form>
+          <div class="alert alert-warning" *ngIf="isSignUpFailed">
+            Signup failed!<br />{{ errorMessage }}
+          </div>
+          <div class="alert alert-success" *ngIf="isSuccessful">
+            Please check your registered email to confirm your account.
+          </div>
         </div>
       </div>
     </div>

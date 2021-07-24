@@ -3,4 +3,5 @@ export class UserDto{
     password:string;
     email:string;
     mobileNumber:any;
+    role:string;
 }

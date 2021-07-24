@@ -8,6 +8,7 @@ import { ImportExcelComponent } from './components/import-excel/import-excel.com
 import { CreateIpoComponent } from './components/ipo/create-ipo/create-ipo.component';
 import { IpoComponent } from './components/ipo/ipo.component';
 import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { CreateStockExchangeComponent } from './components/stock-exchange/create-stock-exchange/create-stock-exchange.component';
 import { StockExchangeComponent } from './components/stock-exchange/stock-exchange.component';
@@ -26,7 +27,8 @@ const routes: Routes = [
   {path: 'edit-ipo', component: CreateIpoComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
-  {path: 'compare',component:ComparisionTabComponent}
+  {path: 'compare',component:ComparisionTabComponent},
+  {path: 'profile',component:ProfileComponent}
 ];
 
 @NgModule({

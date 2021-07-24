@@ -28,6 +28,8 @@ import {Chart} from 'chart.js';
 import { ComparisionTabComponent } from './components/comparision-tab/comparision-tab.component';
 import { ComparisionSectorsComponent } from './components/comparision-tab/comparision-sectors/comparision-sectors.component';
 import { ComparisionCompSectorComponent } from './components/comparision-tab/comparision-comp-sector/comparision-comp-sector.component';
+import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { ComparisionCompSectorComponent } from './components/comparision-tab/com
     ComparisionComponent,
     ComparisionTabComponent,
     ComparisionSectorsComponent,
-    ComparisionCompSectorComponent
+    ComparisionCompSectorComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,7 @@ import { ComparisionCompSectorComponent } from './components/comparision-tab/com
     NgMultiSelectDropDownModule.forRoot(),
     AgGridModule.withComponents([])
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

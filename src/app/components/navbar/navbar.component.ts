@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TokenStorageService } from 'src/app/security/token-storage.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,16 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  isAuthenticated: boolean = true;
-  isAdmin: boolean = true;
+  private role: string;
+  isLoggedIn = false;
+  isAdmin = false;
+  username?: string;
 
-  constructor() { }
+  constructor(private tokenStorageService: TokenStorageService,
+    private router:Router) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if (this.isLoggedIn) {
+      const user = this.tokenStorageService.getUser();
+      this.role = user.role;
+
+      this.isAdmin = (this.role == 'ROLE_ADMIN') ? true : false;
+      this.username = user.username;
+    }
   }
 
-  onLogoutClick(){
-    this.isAuthenticated = false;
+  logout(): void {
+    this.tokenStorageService.signOut();
+    this.router.navigate(['']);
   }
 
 }

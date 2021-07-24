@@ -1,22 +1,29 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { UserDto } from "../models/UserDto";
-import { ServerUrl } from "../ServerUrl";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { UserDto } from '../models/UserDto';
+import { ServerUrl } from '../ServerUrl';
 
-@Injectable({providedIn: 'root'})
-export class AuthService{
-    url:string;
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
-    constructor(private http: HttpClient, private router: Router) {
-        this.url = ServerUrl.url+'/user';
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
 
-    public createUser(user:UserDto){
-        return this.http.post(this.url+`/add`,user);
-    }
+    url:String;
 
-    public login(user:UserDto){
-        return this.http.post(this.url+`/login`,user,{responseType:'text'});
-    }
+  constructor(private http: HttpClient) {
+    this.url = ServerUrl.url + "/user";
+   }
+
+  login(userDto:UserDto): Observable<any> {
+    return this.http.post(this.url + `/login`, userDto, httpOptions);
+  }
+
+  register(userDto:UserDto): Observable<any> {
+    return this.http.post(this.url + `/signup`, userDto, {responseType:'text'});
+  }
 }
