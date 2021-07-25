@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { ImportExcelComponent } from './components/import-excel/import-excel.component';
 import { CompanyComponent } from './components/company/company.component';
@@ -30,11 +29,11 @@ import { ComparisionSectorsComponent } from './components/comparision-tab/compar
 import { ComparisionCompSectorComponent } from './components/comparision-tab/comparision-comp-sector/comparision-comp-sector.component';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { ProfileComponent } from './components/profile/profile.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     HomeComponent,
     ImportExcelComponent,
     CompanyComponent,
@@ -62,7 +61,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     HttpClientModule,
     ToastrModule.forRoot({timeOut: 3000, preventDuplicates:true}),
     NgMultiSelectDropDownModule.forRoot(),
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
+    NgxSpinnerModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

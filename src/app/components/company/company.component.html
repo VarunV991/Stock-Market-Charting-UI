@@ -125,3 +125,32 @@ style="background-color: rgba(0, 0, 0, 0.05);">
     </div>
   </div>
 </div>
+
+<div class="modal" role="dialog" tabindex="-1" [ngStyle]="{'display':stockDataDisplay}"
+style="background-color: rgba(0, 0, 0, 0.05);">
+    <div class="modal-dialog modal-lg" style="border: 1px solid #adadad;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Stock Price Data for {{companyName}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <div *ngIf="flagForStockData;else noData">
+                <ag-grid-angular
+                style="width: 100%;height: 70vh;"
+                class="ag-theme-alpine"
+                [rowData]="rowDataForStockData"
+                [columnDefs]="colDefsForStockData"
+                [defaultColDef]="defaultColDef">
+                </ag-grid-angular>
+              </div>
+              <ng-template #noData>
+                <h5>There are no stock price data for the company.</h5>
+              </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

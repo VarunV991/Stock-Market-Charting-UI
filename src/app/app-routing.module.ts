@@ -12,23 +12,24 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { CreateStockExchangeComponent } from './components/stock-exchange/create-stock-exchange/create-stock-exchange.component';
 import { StockExchangeComponent } from './components/stock-exchange/stock-exchange.component';
+import { AuthGuard } from './helpers/auth.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'import-excel',component: ImportExcelComponent},
-  {path: 'companies', component: CompanyComponent},
-  {path: 'create-company', component: CreateCompanyComponent},
-  {path: 'edit-company', component: CreateCompanyComponent},
-  {path: 'stock-exchanges', component: StockExchangeComponent},
-  {path: 'create-stock-exchange', component: CreateStockExchangeComponent},
-  {path: 'edit-stock-exchange', component: CreateStockExchangeComponent},
-  {path: 'ipos', component: IpoComponent},
-  {path: 'create-ipo', component: CreateIpoComponent},
-  {path: 'edit-ipo', component: CreateIpoComponent},
+  {path: 'import-excel',component: ImportExcelComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN']}},
+  {path: 'companies', component: CompanyComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN']}},
+  {path: 'create-company', component: CreateCompanyComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN']}},
+  {path: 'edit-company', component: CreateCompanyComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN']}},
+  {path: 'stock-exchanges', component: StockExchangeComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN']}},
+  {path: 'create-stock-exchange', component: CreateStockExchangeComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN']}},
+  {path: 'edit-stock-exchange', component: CreateStockExchangeComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN']}},
+  {path: 'ipos', component: IpoComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN','ROLE_USER']}},
+  {path: 'create-ipo', component: CreateIpoComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN']}},
+  {path: 'edit-ipo', component: CreateIpoComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN']}},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
-  {path: 'compare',component:ComparisionTabComponent},
-  {path: 'profile',component:ProfileComponent}
+  {path: 'compare',component:ComparisionTabComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN','ROLE_USER']}},
+  {path: 'profile',component:ProfileComponent,canActivate:[AuthGuard],data:{roles: ['ROLE_ADMIN','ROLE_USER']}}
 ];
 
 @NgModule({

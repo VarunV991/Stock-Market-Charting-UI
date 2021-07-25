@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { IpoDto } from 'src/app/models/IpoDto';
 import { GridOptions } from 'ag-grid-community';
 import { StockExchangeService } from 'src/app/service/stock-exchange.service';
+import { StockPriceService } from 'src/app/service/stock-price.service';
 
 @Component({
   selector: 'app-company',
@@ -39,10 +40,16 @@ export class CompanyComponent implements OnInit {
   defaultColDef;
   rowSelection;
 
+  rowDataForStockData:any[] = [];
+  colDefsForStockData:any[] = [];
+  stockDataDisplay = 'none';
+  flagForStockData:boolean = false;
+
   public timeout:any = {timeOut:10000,closeButton:true,escapeHtml:true}
 
   constructor(private companyService:CompanyService,
     private stockExchangeService:StockExchangeService,
+    private stockPriceService:StockPriceService,
     private router:Router,
     private toastr:ToastrService) { }
 
@@ -58,7 +65,17 @@ export class CompanyComponent implements OnInit {
       {field:'exchanges',headerName:'Listed Exchanges',sortable:true,filter:true},
       {field:'sectorName',headerName:'Sector',sortable:true,filter:true},
       {field:'description',headerName:'Description',sortable:true,filter:true,tooltipField:'description'},
-    ]
+    ];
+
+    this.colDefsForStockData = [
+      {field:'id',headerName:'Company Id',hide:true},
+      {field:'companyCode',headerName:'Company Code',sortable:true,filter:true},
+      {field:'stockExchangeName',headerName:'Exchange Name',sortable:true,filter:true},
+      {field:'price',headerName:'Price',sortable:true,filter:true},
+      {field:'date',headerName:'Date',sortable:true,filter:true},
+      {field:'time',headerName:'Time',sortable:true,filter:true}
+    ];
+
     this.rowSelection = 'single';
     this.defaultColDef = {
       minWidth:40,
@@ -122,6 +139,13 @@ export class CompanyComponent implements OnInit {
           context:params.context,
           action: () => {
             params.context.getIpoDetails(selectedRow[0].name);
+          }
+        },
+        {
+          name:'Get Stock Price Data',
+          context:params.context,
+          action: () => {
+            params.context.getStockData(selectedRow[0].name);
           }
         },
         {
@@ -201,6 +225,23 @@ export class CompanyComponent implements OnInit {
     })
   }
 
+  getStockData(name){
+    this.companyName = name;
+    this.stockDataDisplay = 'block';
+    this.stockPriceService.getStockPriceDataForCompany(name).subscribe(res=>{
+      if(res.length>0){
+        this.rowDataForStockData = [...res];
+        this.flagForStockData = true;
+      }
+      else{
+        this.flagForStockData = false;
+      }
+    },err=>{
+      this.stockDataDisplay = 'none';
+      this.toastr.error(err.error,'',this.timeout);
+    })
+  }
+
   openExchangeCodeMapping(name){
     this.exchangeCodeMappingDisplay = 'block';
     this.companyName = name;
@@ -264,9 +305,8 @@ export class CompanyComponent implements OnInit {
   }
 
   closeModal(){
-    this.exchangeCodeMappingDisplay = 'none';
     this.ipoDetailDisplay = 'none';
-    this.companyName = null;
+    this.stockDataDisplay = 'none';
     this.ipos = [];
     this.reset();
   }

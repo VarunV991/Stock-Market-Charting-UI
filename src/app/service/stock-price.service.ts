@@ -17,4 +17,8 @@ export class StockPriceService{
     public addStockPriceList(stockPrices:StockPriceDto[]):Observable<any>{
         return this.http.post(this.url+`/addList`,stockPrices);
     }
+
+    public getStockPriceDataForCompany(name):Observable<any>{
+        return this.http.get(this.url+`/`+name);
+    }
 }

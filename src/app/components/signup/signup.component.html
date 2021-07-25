@@ -62,7 +62,7 @@
             <input type="submit" value="Submit" class="btn btn-primary btn-block">
           </form>
           <div class="alert alert-warning" *ngIf="isSignUpFailed">
-            Signup failed!<br />{{ errorMessage }}
+            Signup failed!
           </div>
           <div class="alert alert-success" *ngIf="isSuccessful">
             Please check your registered email to confirm your account.
@@ -71,3 +71,5 @@
       </div>
     </div>
   </div>  
+
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
