@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { IpoService } from 'src/app/service/ipo.service';
 import { TokenStorageService } from '../../security/token-storage.service';
 import { IpoDto } from '../../models/IpoDto';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-ipo',
@@ -25,6 +26,7 @@ export class IpoComponent implements OnInit {
   constructor(private ipoService:IpoService,
     private router:Router,
     private toastr:ToastrService,
+    private spinner:NgxSpinnerService,
     private tokenStorageService:TokenStorageService) { }
 
   ngOnInit(): void {
@@ -49,14 +51,17 @@ export class IpoComponent implements OnInit {
   }
 
   viewIpos(){
+    this.spinner.show();
+    this.flagForData=true;
     this.ipoService.getIpos().subscribe(response => {
       this.rowData = [...response];
-      if(this.rowData.length>0){
-        this.flagForData=true;
-      }
-      else{
+      if(this.rowData.length==0){
         this.flagForData = false;
       }
+      this.spinner.hide();
+    },err=>{
+      this.spinner.hide();
+      this.toastr.error(err.error,'',this.timeout);
     })
   }
 

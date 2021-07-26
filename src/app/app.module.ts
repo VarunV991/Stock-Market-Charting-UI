@@ -16,8 +16,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { IpoComponent } from './components/ipo/ipo.component';
 import { CreateIpoComponent } from './components/ipo/create-ipo/create-ipo.component';
-import { SectorComponent } from './components/sector/sector.component';
-import { CreateSectorComponent } from './components/sector/create-sector/create-sector.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ComparisionComponent } from './components/comparision-tab/comparision/comparision.component';
@@ -42,8 +40,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CreateStockExchangeComponent,
     IpoComponent,
     CreateIpoComponent,
-    SectorComponent,
-    CreateSectorComponent,
     LoginComponent,
     SignupComponent,
     ComparisionComponent,

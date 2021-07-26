@@ -9,6 +9,7 @@ import { IpoDto } from 'src/app/models/IpoDto';
 import { GridOptions } from 'ag-grid-community';
 import { StockExchangeService } from 'src/app/service/stock-exchange.service';
 import { StockPriceService } from 'src/app/service/stock-price.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-company',
@@ -50,6 +51,7 @@ export class CompanyComponent implements OnInit {
   constructor(private companyService:CompanyService,
     private stockExchangeService:StockExchangeService,
     private stockPriceService:StockPriceService,
+    private spinner:NgxSpinnerService,
     private router:Router,
     private toastr:ToastrService) { }
 
@@ -92,18 +94,26 @@ export class CompanyComponent implements OnInit {
   }
 
   getDropdownData(){
+    this.spinner.show();
     this.stockExchangeService.getStockExchanges().subscribe(res=>{
       this.exchanges = [...res];
+      this.spinner.hide();
+    },err=>{
+      this.toastr.error(err.error,'',this.timeout);
     })
   }
 
   viewCompanies(){
+    this.flagForData = true;
     this.companyService.getCompanies()
       .subscribe((response) => {
         this.rowData = [...response];
-        if(this.rowData.length>0){
-          this.flagForData = true;
+        if(this.rowData.length==0){
+          this.flagForData = false;
         }
+      },err=>{
+        this.toastr.error(err.error,'',this.timeout);
+        this.flagForData = false;
       });
   }
 
@@ -215,19 +225,21 @@ export class CompanyComponent implements OnInit {
 
   getIpoDetails(name){
     this.companyName = name;
-    this.ipoDetailDisplay = 'block';
+    this.spinner.show();
     this.companyService.getCompanyIpoDetails(name).subscribe(response => {
       this.ipos = [response];
+      this.ipoDetailDisplay = 'block';
+      this.spinner.hide();
     },
     err=>{
-      console.log(err);
+      this.spinner.hide();
       this.toastr.error(err.error,'',this.timeout);
     })
   }
 
   getStockData(name){
+    this.spinner.show();
     this.companyName = name;
-    this.stockDataDisplay = 'block';
     this.stockPriceService.getStockPriceDataForCompany(name).subscribe(res=>{
       if(res.length>0){
         this.rowDataForStockData = [...res];
@@ -236,8 +248,11 @@ export class CompanyComponent implements OnInit {
       else{
         this.flagForStockData = false;
       }
+      this.stockDataDisplay = 'block';
+      this.spinner.hide();
     },err=>{
       this.stockDataDisplay = 'none';
+      this.spinner.hide();
       this.toastr.error(err.error,'',this.timeout);
     })
   }

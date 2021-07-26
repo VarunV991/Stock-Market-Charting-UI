@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GridOptions } from 'ag-grid-community';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { StockExchangeService } from 'src/app/service/stock-exchange.service';
 import { CompanyDto } from '../../models/CompanyDto';
 import { StockExchangeDto } from '../../models/StockExchangeDto';
@@ -22,6 +24,8 @@ export class StockExchangeComponent implements OnInit {
   rowSelection;
 
   constructor(private stockExchangeService:StockExchangeService,
+    private spinner:NgxSpinnerService,
+    private toastr:ToastrService,
     private router:Router) { }
 
   ngOnInit(): void {
@@ -43,14 +47,18 @@ export class StockExchangeComponent implements OnInit {
   }
 
   viewStockExchanges(){
+    this.spinner.show();
+    this.flagForData = true;
     this.stockExchangeService.getStockExchanges().subscribe(response => {
       this.rowData = response;
-      if(this.rowData.length>0){
-        this.flagForData = true;
-      }
-      else{
+      if(this.rowData.length==0){
         this.flagForData = false;
       }
+      this.spinner.hide();
+    },err=>{
+      this.spinner.hide();
+      this.flagForData = false;
+      this.toastr.error(err.error);
     })
   }
 
@@ -128,9 +136,14 @@ export class StockExchangeComponent implements OnInit {
   }
 
   onGetCompanies(name){
+    this.spinner.show();
     this.stockExchangeService.getCompaniesinExchange(name).subscribe(response => {
       this.companies = response;
       this.companyListDisplay = 'block';
+      this.spinner.hide();
+    },err=>{
+      this.companyListDisplay = 'none';
+      this.spinner.hide();
     });
   }
 
