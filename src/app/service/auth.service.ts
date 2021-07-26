@@ -26,4 +26,8 @@ export class AuthService {
   register(userDto:UserDto): Observable<any> {
     return this.http.post(this.url + `/signup`, userDto, {responseType:'text'});
   }
+
+  edit(userDto:UserDto):Observable<any> {
+    return this.http.patch(this.url+`/edit`,userDto, httpOptions);
+  }
 }
