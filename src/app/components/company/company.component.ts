@@ -99,11 +99,13 @@ export class CompanyComponent implements OnInit {
       this.exchanges = [...res];
       this.spinner.hide();
     },err=>{
+      this.spinner.hide();
       this.toastr.error(err.error,'',this.timeout);
     })
   }
 
   viewCompanies(){
+    this.spinner.show();
     this.flagForData = true;
     this.companyService.getCompanies()
       .subscribe((response) => {
@@ -111,7 +113,9 @@ export class CompanyComponent implements OnInit {
         if(this.rowData.length==0){
           this.flagForData = false;
         }
+        this.spinner.hide();
       },err=>{
+        this.spinner.hide();
         this.toastr.error(err.error,'',this.timeout);
         this.flagForData = false;
       });
