@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { GridOptions } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
 import { IpoService } from 'src/app/service/ipo.service';
+import { TokenStorageService } from '../../security/token-storage.service';
 import { IpoDto } from '../../models/IpoDto';
 
 @Component({
@@ -17,12 +18,14 @@ export class IpoComponent implements OnInit {
   colDefs:any[] = [];
   defaultColDef;
   rowSelection;
+  flagForAdmin:boolean = false;
 
   public timeout:any = {timeOut:10000,closeButton:true,escapeHtml:true};
 
   constructor(private ipoService:IpoService,
     private router:Router,
-    private toastr:ToastrService) { }
+    private toastr:ToastrService,
+    private tokenStorageService:TokenStorageService) { }
 
   ngOnInit(): void {
     this.colDefs = [
@@ -41,6 +44,7 @@ export class IpoComponent implements OnInit {
       minWidth:40,
       flex:1
     }
+    this.flagForAdmin = (this.tokenStorageService.getUser().role == 'ROLE_ADMIN') ? true : false;
     this.viewIpos();
   }
 
@@ -63,7 +67,7 @@ export class IpoComponent implements OnInit {
 
   getContextMenuItems(params){
     var selectedRow = params.api.getSelectedRows();
-    if(selectedRow.length>0){
+    if(selectedRow.length>0 && params.context.flagForAdmin){
       const result = [
         {
           name:'Edit',
