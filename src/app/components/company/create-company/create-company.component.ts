@@ -53,7 +53,8 @@ export class CreateCompanyComponent implements OnInit {
   onSubmit({value, valid}: {value: CompanyDto, valid: boolean}) {
     if(this.selectedSector.length==0) valid=false;
     if(valid){
-      this.company.sectorName = this.selectedSector[0].name;
+      this.company.sectorName = 
+      (this.selectedSector[0].name == undefined) ? this.selectedSector[0] : this.selectedSector[0].name;
       if(this.editOperation){
         this.companyService.editCompany(this.company);
       }

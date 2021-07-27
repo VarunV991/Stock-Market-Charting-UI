@@ -35,10 +35,20 @@ export class CreateIpoComponent implements OnInit {
   onSubmit({value, valid}: {value: IpoDto, valid: boolean}) {
     if(valid){
       if(this.editOperation){
-        this.ipoService.editIpo(this.ipo);
+        this.ipoService.editIpo(this.ipo).subscribe((responseData) => {
+            this.router.navigate(['/ipos']);
+          },
+          err=>{
+            this.toastr.error(err.error,'',this.timeout);
+          });
       }
       else{
-        this.ipoService.addIpo(this.ipo);
+        this.ipoService.addIpo(this.ipo).subscribe((responseData) => {
+            this.router.navigate(['/ipos']);
+          },
+          err=>{
+            this.toastr.error(err.error,'',this.timeout);
+          });
       }
     }
   }

@@ -21,16 +21,12 @@ export class IpoService{
         return this.http.get(this.url+"/"+id);
     }
 
-    public addIpo(ipo:IpoDto){
-        this.http.post(this.url+`/add`,ipo).subscribe((responseData) => {
-            this.router.navigate(['/ipos']);
-          });
+    public addIpo(ipo:IpoDto):Observable<any>{
+        return this.http.post(this.url+`/add`,ipo);
     }
 
-    public editIpo(ipo:IpoDto){
-        this.http.put(this.url + "/edit" , ipo).subscribe((responseData) => {
-            this.router.navigate(['/ipos']);
-          });
+    public editIpo(ipo:IpoDto):Observable<any>{
+        return this.http.put(this.url + "/edit" , ipo);
     }
 
 }
