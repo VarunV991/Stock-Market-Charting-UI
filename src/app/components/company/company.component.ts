@@ -71,8 +71,8 @@ export class CompanyComponent implements OnInit {
 
     this.colDefsForStockData = [
       {field:'id',headerName:'Company Id',hide:true},
-      {field:'companyCode',headerName:'Company Code',sortable:true,filter:true},
-      {field:'stockExchangeName',headerName:'Exchange Name',sortable:true,filter:true},
+      {field:'companyCode',headerName:'Company Code',sortable:true,filter:true,headerTooltip:'Company Code'},
+      {field:'stockExchangeName',headerName:'Exchange Name',sortable:true,filter:true,headerTooltip:'Exchange Name'},
       {field:'price',headerName:'Price',sortable:true,filter:true},
       {field:'date',headerName:'Date',sortable:true,filter:true},
       {field:'time',headerName:'Time',sortable:true,filter:true}

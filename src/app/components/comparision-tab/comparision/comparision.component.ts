@@ -22,6 +22,14 @@ export class ComparisionComponent implements OnInit {
     'rgba(75, 192, 192, 1)'
 ];
 
+  holidayList:any[] = [
+    "2021-01-26",
+    "2021-03-11",
+    "2021-03-29",
+    "2021-04-02",
+    "2021-04-14",
+    "2021-04-21"
+  ];
   selectedCompanies:any[] = [];
   selectedExchange:any[] = [];
   selectedPeriod:any[] = [];
@@ -85,7 +93,6 @@ export class ComparisionComponent implements OnInit {
       if(this.selectedCompanies.length!=0){
         let dataObjs = [];
         let labels = this.generateDateRange();
-        console.log(labels);
         let fetchList = new Promise<void>((resolve) => {
           this.selectedCompanies.forEach(async (company,index,array) => {
             await this.comparisionService.getStockPricesForCompany(company.id,this.selectedExchange[0].name,
@@ -93,7 +100,7 @@ export class ComparisionComponent implements OnInit {
                 let prices = [];
                 if(Object.keys(response).length>0){
                   let stockDates = Object.keys(response);
-                  labels.forEach((label)=>{
+                  labels.forEach((label,index)=>{
                     if(stockDates.includes(label)){
                       prices.push(response[label].toFixed(2));
                     }
@@ -178,13 +185,27 @@ export class ComparisionComponent implements OnInit {
     if(period == 'Day' || period == 'Week'){
       let days = (period == 'Day')? 1 : 7;
       for(fromDate;fromDate<toDate;fromDate.setDate(fromDate.getDate()+days)){
-        dateRange.push(new Date(fromDate));
+        let curDate = new Date(fromDate);
+        let dayOfWeek = curDate.getDay();
+        if(dayOfWeek!=0 && dayOfWeek!=6 && !this.holidayList.includes(curDate.toISOString().slice(0,10))){
+          dateRange.push(curDate);
+        }
       }
     }
     else if(period == 'Month' || period == 'Quarter'){
       let month = (period == 'Month')? 1 : 3;
       for(fromDate;fromDate<toDate;fromDate.setMonth(fromDate.getMonth()+month)){
-        dateRange.push(new Date(fromDate));
+        let curDate = new Date(fromDate);
+        let dayOfWeek = curDate.getDay();
+        if(dayOfWeek==0)
+          curDate.setDate(curDate.getDate()+1);
+        else if(dayOfWeek==6)
+          curDate.setDate(curDate.getDate()-1);
+
+        if(this.holidayList.includes(curDate.toISOString().slice(0,10))){
+          curDate.setDate(curDate.getDate()+1);
+        }
+        dateRange.push(curDate);
       }
     }
     dateRange.push(toDate);

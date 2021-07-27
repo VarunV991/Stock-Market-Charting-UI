@@ -3,6 +3,7 @@ import { StockPriceDto } from '../../models/StockPriceDto';
 import * as XLSX from 'xlsx';
 import { StockPriceService } from 'src/app/service/stock-price.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-import-excel',
@@ -26,7 +27,8 @@ export class ImportExcelComponent implements OnInit {
   inputFileName:string = "Choose File";
 
   constructor(private stockPriceService:StockPriceService,
-    private toastr:ToastrService) { }
+    private toastr:ToastrService,
+    private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
   }
@@ -66,15 +68,18 @@ export class ImportExcelComponent implements OnInit {
   }
 
   uploadData(){
+    this.spinner.show();
     this.stockPriceService.addStockPriceList(this.stockPrices).subscribe(response=>{
         this.companyCode = this.stockPrices[0].companyCode;
         this.stockExchangeName = this.stockPrices[0].stockExchangeName;
         this.fromDate = this.stockPrices[0].date;
         this.toDate = this.stockPrices[this.numberOfRecords-1].date;
         this.isUploaded = true;
+        this.spinner.hide();
         this.reset();
     },
     err=>{
+      this.spinner.hide();
       this.toastr.error(err.error,'',this.timeout);
       this.reset();
     });
