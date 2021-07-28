@@ -30,7 +30,7 @@ export class SignupComponent implements OnInit {
       this.toastr.error('Fill out the User form properly!','',this.timeout);
     }
     else{
-      this.user.role = "admin";
+      this.user.role = "user";
       this.spinner.show();
       this.authService.register(this.user).subscribe(
         data => {
